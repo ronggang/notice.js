@@ -9,6 +9,7 @@ export let Defaults = {
     newestOnTop: false,
     timeout: 30,
     progressBar: true,
+    indeterminate: false,
     closeWith: ['button'],
     animation: null,
     modal: false,

@@ -12,6 +12,7 @@ export default class NoticeJs {
   constructor (options = {}) {
     this.options = Object.assign(API.Defaults, options);
     this.component = new Components();
+    this.id = "noticejs-" + Math.random();
     
     this.on('beforeShow', this.options.callbacks.beforeShow);
     this.on('onShow', this.options.callbacks.onShow);
@@ -50,7 +51,8 @@ export default class NoticeJs {
   
     //Append NoticeJs
     let noticeJs = helper.appendNoticeJs(noticeJsHeader, noticeJsBody, noticeJsProgressBar);
-
+    noticeJs.setAttribute("id", this.id);
+    this.dom = noticeJs;
     return noticeJs;
   }
 
@@ -74,5 +76,12 @@ export default class NoticeJs {
   static overrideDefaults (options) {
     this.options = Object.assign(API.Defaults, options);
     return this
+  }
+
+  /**
+   * close
+   */
+  close() {
+    helper.CloseItem(this.dom);
   }
 }

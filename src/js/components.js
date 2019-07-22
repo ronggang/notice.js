@@ -72,7 +72,18 @@ export class Components {
       options.timeout !== false
     ) {
       let width = 100;
-      let id = setInterval(frame, options.timeout);
+      let progressDirection = 0;
+      let id = 0;
+      let domId = "";
+
+      if (options.indeterminate === true) {
+        id = setInterval(indeterminateFrame, options.timeout);
+        domId = "noticejs-progressbar-" + id;
+        element.setAttribute("id", domId);
+      } else {
+        id = setInterval(frame, options.timeout);
+      }
+
       function frame() {
         if (width <= 0) {
           clearInterval(id);
@@ -100,6 +111,26 @@ export class Components {
           }
         } else {
           width--; 
+          bar.style.width = width + '%'; 
+        }
+      }
+
+      function indeterminateFrame() {
+        if (progressDirection === 0) {
+          width--;
+          if (width === 0 ) {
+            progressDirection = 1;
+          }
+        } else {
+          width++;
+          if (width === 100) {
+            progressDirection = 0;
+          }
+        }
+
+        if (document.getElementById(domId) == null) {
+          clearInterval(id);
+        } else {
           bar.style.width = width + '%'; 
         }
       }
